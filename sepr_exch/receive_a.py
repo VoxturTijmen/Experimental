@@ -3,14 +3,14 @@ import pika, sys, os
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
+    channel = connection.channel(channel_number=10)
 
-    channel.queue_declare(queue='queue_b')
+    channel.queue_declare(queue='queue_a')
 
     def callback(ch, method, properties, body):
         print(f" [x] Received {body}")
 
-    channel.basic_consume(queue='queue_b', on_message_callback=callback, auto_ack=True)
+    channel.basic_consume(queue='queue_a', on_message_callback=callback, auto_ack=True)
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()

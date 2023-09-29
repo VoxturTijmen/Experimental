@@ -33,24 +33,26 @@ def choose(options: dict):
 
 
 def func_a(message: str):
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
-    channel.queue_declare(queue='queue_a')
+    channel.exchange_declare(exchange='a', exchange_type='fanout')
 
-    channel.basic_publish(exchange='', routing_key='hello', body=message)
-    print(f" [x] Sent '{message}'")
+    channel.basic_publish(exchange='a', routing_key='', body=message)
+    print(f" [x] Sent {message}")
     connection.close()
 
 
 def func_b(message: str):
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
-    channel.queue_declare(queue='queue_b')
+    channel.exchange_declare(exchange='b', exchange_type='fanout')
 
-    channel.basic_publish(exchange='', routing_key='hello', body=message)
-    print(f" [x] Sent '{message}'")
+    channel.basic_publish(exchange='b', routing_key='', body=message)
+    print(f" [x] Sent {message}")
     connection.close()
 
 

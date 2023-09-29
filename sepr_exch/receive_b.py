@@ -1,15 +1,16 @@
+#!/usr/bin/env python
 import pika, sys, os
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
+    channel = connection.channel(channel_number=12)
 
-    channel.queue_declare(queue='hello')
+    channel.queue_declare(queue='queue_b')
 
     def callback(ch, method, properties, body):
         print(f" [x] Received {body}")
 
-    channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=True)
+    channel.basic_consume(queue='queue_b', on_message_callback=callback, auto_ack=True)
 
     print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
