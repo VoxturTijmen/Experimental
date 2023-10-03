@@ -1,0 +1,11 @@
+Taken from https://medium.com/@jordan-temim/ruling-the-event-driven-architecture-with-rabbitmq-534798bdf17e
+And https://www.rabbitmq.com/tutorials/tutorial-five-python.html
+
+
+"docs":
+RabbitMQ messages will be formatted like "<type>.<infoLevel>.<sender>.<destination>"
+
+type: event|task
+infoLevel: info|warning|error|critical
+sender: any
+destination: any
