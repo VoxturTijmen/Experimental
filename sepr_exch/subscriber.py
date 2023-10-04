@@ -20,13 +20,11 @@ print(' [*] Waiting for logs. To exit press CTRL+C')
 
 def callback(ch, method, properties, body):
     print(f" [x] {body}")
-    # time.sleep(3)
-    # print("3!")
-    # time.sleep(3)
-    # print("6!")
-    # time.sleep(3)
-    # print("9!")
-    # time.sleep(3)
+    x = list(range(1, 4))
+    x.reverse()
+    for i in x:
+        print(f" [*] Processing... [{i}] second{'' if i == 1 else 's'} left.")
+        time.sleep(1)
     print("Ready!")
 
 channel.basic_consume(
