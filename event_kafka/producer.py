@@ -10,6 +10,7 @@ if __name__ == '__main__':
     # Parse the command line.
     parser = ArgumentParser()
     parser.add_argument('config_file', type=FileType('r'))
+    parser.add_argument('--amount', type=int)
     args = parser.parse_args()
 
     # Parse the configuration.
@@ -28,7 +29,7 @@ if __name__ == '__main__':
         if err:
             print('ERROR: Message failed delivery: {}'.format(err))
         else:
-            print("Produced event to topic {topic:12}: key = {key:12} value = {value:12}".format(
+            print("Produced event to topic {topic:12}: key = {key:6} value = {value:6}".format(
                 topic=msg.topic(), key=msg.key().decode('utf-8'), value=msg.value().decode('utf-8')))
 
     # Produce data by selecting random values from these lists.
@@ -37,7 +38,7 @@ if __name__ == '__main__':
     products = ['book', 'alarm clock', 't-shirts', 'gift card', 'batteries']
 
     count = 0
-    for i in range(10):
+    for i in range(args.amount):
 
         user_id = choice(user_ids)
         product = choice(products)

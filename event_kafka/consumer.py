@@ -42,7 +42,7 @@ if __name__ == '__main__':
     # Poll for new messages from Kafka and print them.
     try:
         while True:
-            time.sleep(0.5)
+            time.sleep(0.2)
             msg = consumer.poll(1.0)
             if msg is None:
                 # Initial message consumption may take up to
@@ -54,7 +54,7 @@ if __name__ == '__main__':
             else:
                 # Extract the (optional) key and value, and print.
 
-                print("Consumed event from topic {topic}: key = {key:12} value = {value:12}".format(
+                print("Consumed event from topic {topic}: key = {key:6} value = {value:6}".format(
                     topic=msg.topic(), key=msg.key().decode('utf-8'), value=msg.value().decode('utf-8')))
     except KeyboardInterrupt:
         pass
