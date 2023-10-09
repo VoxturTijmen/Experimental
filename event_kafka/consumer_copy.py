@@ -11,7 +11,6 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('config_file', type=FileType('r'))
     parser.add_argument('--reset', action='store_true')
-    parser.add_argument('--group-id', type=str, help='Consumer group ID')
     args = parser.parse_args()
 
     # Parse the configuration.
@@ -20,10 +19,6 @@ if __name__ == '__main__':
     config_parser.read_file(args.config_file)
     config = dict(config_parser['default'])
     config.update(config_parser['consumer'])
-
-    # Set the group.id in the configuration
-    if args.group_id:
-        config['group.id'] = args.group_id
 
     # Create Consumer instance
     consumer = Consumer(config)
@@ -36,7 +31,7 @@ if __name__ == '__main__':
             consumer.assign(partitions)
 
     # Subscribe to topic
-    topic = "purchases"
+    topic = "purchases_copy"
     consumer.subscribe([topic], on_assign=reset_offset)
 
     # Poll for new messages from Kafka and print them.
